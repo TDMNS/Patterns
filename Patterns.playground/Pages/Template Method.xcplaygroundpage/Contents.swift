@@ -11,57 +11,128 @@ enum TypeDriveSystem {
 enum SteeringWheelPosition {
     case left, right, center
 }
+
+protocol Toyota {
     
-class Toyota {
-    private let color: CGColor
-    private let amountDoors: Int
-    private let numberIncludedWheels: Int
-    private let typeDriveSystem: TypeDriveSystem
-    var steeringWheelPosition: SteeringWheelPosition = .center
+    var color: CGColor { get }
+    var amountDoors: Int { get }
+    var numberIncludedWheels: Int { get }
+    var typeDriveSystem: TypeDriveSystem { get }
+    var steeringWheelPosition: SteeringWheelPosition? { get set }
+    
+    func buildCar()
+    func chooseColor()
+    func chooseAmountDoors()
+    func chooseNumberIncludedWheels()
+    func chooseTypeDriveSystem()
+    func choosenSteeringWheelPosition()
     
     init(
         color: CGColor,
         amountDoors: Int,
         numberIncludedWheels: Int,
         typeDriveSystem: TypeDriveSystem
-    ){
+    )
+    
+}
+
+extension Toyota {
+    
+    func buildCar() {
+        chooseColor()
+        chooseAmountDoors()
+        chooseNumberIncludedWheels()
+        chooseTypeDriveSystem()
+        choosenSteeringWheelPosition()
+    }
+    func chooseColor() {
+        print("Choose color = \(self.color)")
+    }
+    func chooseAmountDoors() {
+        print("Choose amount doors = \(self.amountDoors)")
+    }
+    func chooseNumberIncludedWheels() {
+        print("Choose number included wheels = \(self.numberIncludedWheels)")
+    }
+    func chooseTypeDriveSystem() {
+        print("Choose type drive system = \(self.typeDriveSystem)")
+    }
+    
+}
+
+final class ToyotaRU: Toyota {
+    
+    var color: CGColor
+    var amountDoors: Int
+    var numberIncludedWheels: Int
+    var typeDriveSystem: TypeDriveSystem
+    var steeringWheelPosition: SteeringWheelPosition?
+    
+    init(color: CGColor, amountDoors: Int, numberIncludedWheels: Int, typeDriveSystem: TypeDriveSystem) {
         self.color = color
         self.amountDoors = amountDoors
         self.numberIncludedWheels = numberIncludedWheels
         self.typeDriveSystem = typeDriveSystem
     }
     
-    func buildCar() {
-        print("Choose color = \(self.color)")
-        print("Choose amount doors = \(self.amountDoors)")
-        choosenSteeringWheelPosition()
-        print("Choose number included wheels = \(self.numberIncludedWheels)")
-        print("Choose type drive system = \(self.typeDriveSystem)")
+    func choosenSteeringWheelPosition() {
+        self.steeringWheelPosition = .left
+        guard let steeringWheelPosition = self.steeringWheelPosition else {
+            return
+        }
+        print("Choose steering wheel position = \(steeringWheelPosition)")
     }
     
-    func choosenSteeringWheelPosition() {}
-}
-
-final class ToyotaRU: Toyota {
-    override func choosenSteeringWheelPosition() {
-        self.steeringWheelPosition = .left
-        print("Choose steering wheel position = \(self.steeringWheelPosition)")
-    }
 }
 
 final class ToyotaJP: Toyota {
-    override func choosenSteeringWheelPosition() {
-        self.steeringWheelPosition = .right
-        print("Choose steering wheel position = \(self.steeringWheelPosition)")
+
+    var color: CGColor
+    var amountDoors: Int
+    var numberIncludedWheels: Int
+    var typeDriveSystem: TypeDriveSystem
+    var steeringWheelPosition: SteeringWheelPosition?
+    
+    init(color: CGColor, amountDoors: Int, numberIncludedWheels: Int, typeDriveSystem: TypeDriveSystem) {
+        self.color = color
+        self.amountDoors = amountDoors
+        self.numberIncludedWheels = numberIncludedWheels
+        self.typeDriveSystem = typeDriveSystem
     }
+    
+    func choosenSteeringWheelPosition() {
+        self.steeringWheelPosition = .right
+        guard let steeringWheelPosition = self.steeringWheelPosition else {
+            return
+        }
+        print("Choose steering wheel position = \(steeringWheelPosition)")
+    }
+
 }
 
 final class ToyotaBY: Toyota {
-    override func choosenSteeringWheelPosition() {
-        self.steeringWheelPosition = .center
-        print("Choose steering wheel position = \(self.steeringWheelPosition)")
-        print("Additional color = red")
+
+    var color: CGColor
+    var amountDoors: Int
+    var numberIncludedWheels: Int
+    var typeDriveSystem: TypeDriveSystem
+    var steeringWheelPosition: SteeringWheelPosition?
+    
+    init(color: CGColor, amountDoors: Int, numberIncludedWheels: Int, typeDriveSystem: TypeDriveSystem) {
+        self.color = color
+        self.amountDoors = amountDoors
+        self.numberIncludedWheels = numberIncludedWheels
+        self.typeDriveSystem = typeDriveSystem
     }
+    
+    func choosenSteeringWheelPosition() {
+        self.steeringWheelPosition = .center
+        guard let steeringWheelPosition = self.steeringWheelPosition else {
+            return
+        }
+        print("Choose steering wheel position = \(steeringWheelPosition)")
+    }
+
 }
 
 print("====================================")
