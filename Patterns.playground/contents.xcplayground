@@ -3,5 +3,6 @@
     <pages>
         <page name='Factory Method'/>
         <page name='Template Method'/>
+        <page name='Strategy Method'/>
     </pages>
 </playground>
