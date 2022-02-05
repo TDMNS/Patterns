@@ -135,37 +135,43 @@ private final class ToyotaBY: Toyota {
 
 }
 
-func chooseCarCountry(country: String) {
-    switch country {
-    case "Russia":
-        print("Toyota in Russia")
-        let toyotaRU = ToyotaRU(
-            color: .black,
-            amountDoors: 4,
-            numberIncludedWheels: 4,
-            typeDriveSystem: .FOURWD)
-        toyotaRU.buildCar()
-    case "Japan":
-        print("Toyota in Japan")
-        let toyotaJP = ToyotaJP(
-            color: .white,
-            amountDoors: 4,
-            numberIncludedWheels: 4,
-            typeDriveSystem: .FF)
-        toyotaJP.buildCar()
-    case "Belarus":
-        print("Toyota in Belarus")
-        let toyotaBY = ToyotaBY(
-            color: .white,
-            amountDoors: 12,
-            numberIncludedWheels: 18,
-            typeDriveSystem: .AT
-        )
-        toyotaBY.buildCar()
-    default: break
+class Factory {
+    
+}
+
+extension Factory {
+    static func chooseCarCountry(country: String) {
+        switch country {
+        case "Russia":
+            print("Toyota in Russia")
+            let toyotaRU = ToyotaRU(
+                color: .black,
+                amountDoors: 4,
+                numberIncludedWheels: 4,
+                typeDriveSystem: .FOURWD)
+            toyotaRU.buildCar()
+        case "Japan":
+            print("Toyota in Japan")
+            let toyotaJP = ToyotaJP(
+                color: .white,
+                amountDoors: 4,
+                numberIncludedWheels: 4,
+                typeDriveSystem: .FF)
+            toyotaJP.buildCar()
+        case "Belarus":
+            print("Toyota in Belarus")
+            let toyotaBY = ToyotaBY(
+                color: .white,
+                amountDoors: 12,
+                numberIncludedWheels: 18,
+                typeDriveSystem: .AT
+            )
+            toyotaBY.buildCar()
+        default: break
+        }
     }
 }
 
-chooseCarCountry(country: "Russia")
-chooseCarCountry(country: "Japan")
-chooseCarCountry(country: "Belarus")
+Factory.chooseCarCountry(country: "Russia")
+Factory.chooseCarCountry(country: "Japan")
+Factory.chooseCarCountry(country: "Belarus")
