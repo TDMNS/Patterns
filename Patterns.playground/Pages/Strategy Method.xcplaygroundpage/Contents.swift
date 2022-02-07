@@ -8,48 +8,81 @@ struct UserData {
     
 }
 
-final class RequestStrategy {}
-extension RequestStrategy {
+protocol FormatStrategy {
     
-    static func requestData(typeServerResponse: String) {
-        let userData = UserData()
-        switch typeServerResponse {
+    func convertData(userData: UserData) -> String
+
+}
+
+private class StrStrategy: FormatStrategy {
+    
+    func convertData(userData: UserData) -> String {
+        return "\(userData.firstName) \(userData.lastName) \(userData.patronymic)"
+    }
+    
+}
+
+private class CsvStrategy: FormatStrategy {
+    
+    func convertData(userData: UserData) -> String {
+        return "\(userData.firstName);\(userData.lastName);\(userData.patronymic)"
+    }
+    
+}
+
+private class MultiStrategy: FormatStrategy {
+    
+    func convertData(userData: UserData) -> String {
+        return "\(userData.firstName)\n\(userData.lastName)\n\(userData.patronymic)"
+    }
+    
+}
+
+class Server {
+    private var currentStrategy: FormatStrategy = StrStrategy()
+}
+extension Server {
+    
+    func setStrategy(strategy: String) {
+        //TDMNSTODO: - перевести входящие данные в нижний регистр
+        switch strategy {
         case "str":
-            StrStrategy.strResponse(userData: userData)
+            currentStrategy = StrStrategy()
         case "csv":
-            CsvStrategy.csvResponse(userData: userData)
+            currentStrategy = CsvStrategy()
         case "multi":
-            MultiStrategy.multiResponse(userData: userData)
-        default: break
+            currentStrategy = MultiStrategy()
+        default:
+            //TDMNSTODO: - add unknown or 404 error here
+            break
         }
     }
     
-}
-
-private final class StrStrategy {
-    
-    static func strResponse(userData: UserData) {
-        print("\(userData.firstName) \(userData.lastName)  \(userData.patronymic)")
+    func getData() -> String {
+        let userData = UserData()
+        return currentStrategy.convertData(userData: userData)
     }
     
 }
 
-private final class CsvStrategy {
-    
-    static func csvResponse(userData: UserData) {
-        print("\(userData.firstName);\(userData.lastName); \(userData.patronymic)")
-    }
-    
+func output(userInput: Int) {
+    print("Enter output format: ")
+    print("1. str")
+    print("2. csv")
+    print("3. multi")
+    print("Your answer: \(userInput)")
 }
 
-private final class MultiStrategy {
-    
-    static func multiResponse(userData: UserData) {
-        print("\(userData.firstName)\n\(userData.lastName)\n\(userData.patronymic)")
-    }
-    
-}
+let server = Server()
 
-RequestStrategy.requestData(typeServerResponse: "str")
-RequestStrategy.requestData(typeServerResponse: "csv")
-RequestStrategy.requestData(typeServerResponse: "multi")
+output(userInput: 1)
+server.setStrategy(strategy: "str")
+print(server.getData())
+
+output(userInput: 2)
+server.setStrategy(strategy: "csv")
+print(server.getData())
+
+output(userInput: 3)
+server.setStrategy(strategy: "multi")
+print(server.getData())
