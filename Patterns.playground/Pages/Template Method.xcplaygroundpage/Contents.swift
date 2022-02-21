@@ -20,42 +20,64 @@ protocol Toyota {
     var typeDriveSystem: TypeDriveSystem { get }
     var steeringWheelPosition: SteeringWheelPosition? { get set }
     
-    func buildCar()
-    func chooseColor()
-    func chooseAmountDoors()
-    func chooseNumberIncludedWheels()
-    func chooseTypeDriveSystem()
-    func choosenSteeringWheelPosition()
+//    func buildCar()
+//    func chooseColor()
+//    func chooseAmountDoors()
+//    func chooseNumberIncludedWheels()
+//    func chooseTypeDriveSystem()
+    mutating func choosenSteeringWheelPosition()
     
-    init(
-        color: CGColor,
-        amountDoors: Int,
-        numberIncludedWheels: Int,
-        typeDriveSystem: TypeDriveSystem
-    )
+//    init(
+//        color: CGColor,
+//        amountDoors: Int,
+//        numberIncludedWheels: Int,
+//        typeDriveSystem: TypeDriveSystem
+//    )
     
 }
 
 extension Toyota {
     
-    func buildCar() {
+    mutating func buildCar() {
         chooseColor()
         chooseAmountDoors()
         chooseNumberIncludedWheels()
         chooseTypeDriveSystem()
         choosenSteeringWheelPosition()
     }
-    func chooseColor() {
+    private func chooseColor() {
         print("Choose color = \(self.color)")
     }
-    func chooseAmountDoors() {
+    private func chooseAmountDoors() {
         print("Choose amount doors = \(self.amountDoors)")
     }
-    func chooseNumberIncludedWheels() {
+    private func chooseNumberIncludedWheels() {
         print("Choose number included wheels = \(self.numberIncludedWheels)")
     }
-    func chooseTypeDriveSystem() {
+    private func chooseTypeDriveSystem() {
         print("Choose type drive system = \(self.typeDriveSystem)")
+    }
+    
+}
+
+struct ToyotaChina: Toyota {
+    
+    var color: CGColor
+    
+    var amountDoors: Int
+    
+    var numberIncludedWheels: Int
+    
+    var typeDriveSystem: TypeDriveSystem
+    
+    var steeringWheelPosition: SteeringWheelPosition?
+    
+    mutating func choosenSteeringWheelPosition() {
+        self.steeringWheelPosition = .right
+        guard let steeringWheelPosition = self.steeringWheelPosition else {
+            return
+        }
+        print("Choose steering wheel position = \(steeringWheelPosition)")
     }
     
 }
@@ -136,28 +158,36 @@ final class ToyotaBY: Toyota {
 }
 
 print("====================================")
-print("Toyota in Russia")
-let toyotaRU = ToyotaRU(
-    color: .black,
-    amountDoors: 4,
-    numberIncludedWheels: 4,
-    typeDriveSystem: .FOURWD)
-toyotaRU.buildCar()
-print("====================================")
-print("Toyota in Japan")
-let toyotaJP = ToyotaJP(
+print("Toyota in China")
+var toyotaChina = ToyotaChina(
     color: .white,
-    amountDoors: 4,
-    numberIncludedWheels: 4,
-    typeDriveSystem: .FF)
-toyotaJP.buildCar()
+    amountDoors: 100,
+    numberIncludedWheels: 400,
+    typeDriveSystem: .AT)
+toyotaChina.buildCar()
 print("====================================")
-print("Toyota in Belarus")
-let toyotaBY = ToyotaBY(
-    color: .white,
-    amountDoors: 12,
-    numberIncludedWheels: 18,
-    typeDriveSystem: .AT
-)
-toyotaBY.buildCar()
-print("====================================")
+//print("Toyota in Russia")
+//let toyotaRU = ToyotaRU(
+//    color: .black,
+//    amountDoors: 4,
+//    numberIncludedWheels: 4,
+//    typeDriveSystem: .FOURWD)
+//toyotaRU.buildCar()
+//print("====================================")
+//print("Toyota in Japan")
+//let toyotaJP = ToyotaJP(
+//    color: .white,
+//    amountDoors: 4,
+//    numberIncludedWheels: 4,
+//    typeDriveSystem: .FF)
+//toyotaJP.buildCar()
+//print("====================================")
+//print("Toyota in Belarus")
+//let toyotaBY = ToyotaBY(
+//    color: .white,
+//    amountDoors: 12,
+//    numberIncludedWheels: 18,
+//    typeDriveSystem: .AT
+//)
+//toyotaBY.buildCar()
+//print("====================================")

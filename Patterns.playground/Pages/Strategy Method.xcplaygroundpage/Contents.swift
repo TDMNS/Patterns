@@ -14,6 +14,21 @@ protocol FormatStrategy {
 
 }
 
+func createStrategy(_ strategy: String) -> FormatStrategy {
+    switch strategy {
+    case "str":
+        return StrStrategy()
+    case "csv":
+        return CsvStrategy()
+    case "multi":
+        return MultiStrategy()
+    case "upper":
+        return UppercasedStrategy()
+    default:
+        return UnknownStrategy()
+    }
+}
+
 private class StrStrategy: FormatStrategy {
     
     func convertData(userData: UserData) -> String {
@@ -38,24 +53,29 @@ private class MultiStrategy: FormatStrategy {
     
 }
 
+private class UppercasedStrategy: FormatStrategy {
+    func convertData(userData: UserData) -> String {
+        return "\(userData)".uppercased()
+    }
+}
+
+private class UnknownStrategy: FormatStrategy {
+    func convertData(userData: UserData) -> String {
+        return "404 error! Not found!"
+    }
+}
+
+// ===================
 class Server {
-    private var currentStrategy: FormatStrategy = StrStrategy()
+    
+    private var currentStrategy: FormatStrategy = UnknownStrategy()
+    
 }
 extension Server {
     
     func setStrategy(strategy: String) {
         //TDMNSTODO: - перевести входящие данные в нижний регистр
-        switch strategy {
-        case "str":
-            currentStrategy = StrStrategy()
-        case "csv":
-            currentStrategy = CsvStrategy()
-        case "multi":
-            currentStrategy = MultiStrategy()
-        default:
-            //TDMNSTODO: - add unknown or 404 error here
-            break
-        }
+        currentStrategy = createStrategy(strategy)
     }
     
     func getData() -> String {
@@ -85,4 +105,12 @@ print(server.getData())
 
 output(userInput: 3)
 server.setStrategy(strategy: "multi")
+print(server.getData())
+
+output(userInput: 5)
+server.setStrategy(strategy: "50")
+print(server.getData())
+
+output(userInput: 5)
+server.setStrategy(strategy: "upper")
 print(server.getData())
